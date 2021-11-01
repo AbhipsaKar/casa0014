@@ -8,7 +8,7 @@ Components used from Arduino IOT kit:
 5. DHT(Humidity sensor)
 6. DC Motor
 7. Servo motor
-8. Photo diodes
+8. LEDs
 9. Capacitor
 10. USB cable
 
