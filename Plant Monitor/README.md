@@ -54,7 +54,10 @@ I found the below plant instructions on the web for this particular plant:
 3. Temperature: The optimal temperature for your Christmas cactus is between 15˚C to 21˚C (60˚F to 70˚F), with average to high levels of humidity.
 4. Fertilizer: Once buds have formed, fertilize your Christmas cactus with high-potassium fertilizer every two weeks once buds form.
 
+I felt that instead of fixing the sensor reading interval to 1 sec, it could be changed depending on weather conditions. Hence , I have added a variable to set the interval in the arduino sketch. The ESP client name and MQTT topic name have also been updated based on my username.
+
 Future ideas:
 1. Adding a photo-diode to measure the intensity of light.
 2. Adding an reminder for fertilizing the plant every 2 weeks.
 3. Adding mechanical parts to the setup to make it self-watering.
+4. Get the sensor reading interval from the web interface/MQTT topic as input.
