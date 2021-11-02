@@ -6,7 +6,7 @@ Components used from IOT kit
 4. DHT(Temperature,Humidity sensor)
 5. Capacitor
 6. USB cable(For power)
-7. Resistors(2*10 KOhms, 1*220 Ohms, 2*100 Ohms)
+7. Resistors(2 * 10 K Ohms, 1 * 220 Ohms, 2 * 100 Ohms)
 8. Header pins for custom made circuit
 9. 2 Nails(to act as the soil sensor)
 
