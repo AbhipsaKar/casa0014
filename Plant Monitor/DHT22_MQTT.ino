@@ -1,11 +1,16 @@
 /*
-    Get date and time - uses the ezTime library at https://github.com/ropg/ezTime -
-    and then show data from a DHT22 on a web page served by the Huzzah and
-    push data to an MQTT server - uses library from https://pubsubclient.knolleary.net
-
-    Duncan Wilson
-    CASA0014 - 2 - Plant Monitor Workshop
-    May 2020
+ *   File name: DHT22_MQTT.ino
+ *   Desc: Get date and time - uses the ezTime library at https://github.com/ropg/ezTime -
+ *   and then show data from a DHT22 on a web page served by the Huzzah and
+ *   push data to an MQTT server - uses library from https://pubsubclient.knolleary.net
+ *
+ *   Author: Duncan Wilson
+ *   CASA0014 - 2 - Plant Monitor Workshop
+ *   May 2020
+ *
+ *   Modified by: Abhipsa Kar
+ *   CASA0014 - Plant Monitor workshop
+ *   Nov 2021
 */
 
 #include <ESP8266WiFi.h>
@@ -18,12 +23,12 @@
 #define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
 
 // Sensors - DHT22 and Nails
-uint8_t DHTPin = 12;        // on Pin 2 of the Huzzah
-uint8_t soilPin = 0;      // ADC or A0 pin on Huzzah
+uint8_t DHTPin = 12;        // D12 pin of MCu to be connected to the DHT sensor.
+uint8_t soilPin = 0;      // ADC or A0 pin on Huzzah connected to soil sensor
 float Temperature;
 float Humidity;
 int Moisture = 0; // initial value just in case web page is loaded before readMoisture called
-int sensorVCC = 13;
+int sensorVCC = 13;  // D13 pin of MCu to be connected to the transistor.
 int blueLED = 2;
 DHT dht(DHTPin, DHTTYPE);   // Initialize DHT sensor.
 
@@ -44,10 +49,12 @@ long lastMsg = 0;
 char msg[50];
 int value = 0;
 
+// 60000 = 1 minute in milliseconds
+long interval = 60000; // interval at which to take the next sensor reading
+long previousTime = 0; //Initialise previous time
+
 // Date and time
 Timezone GB;
-
-
 
 void setup() {
   // Set up LED to be controllable via broker
@@ -69,12 +76,12 @@ void setup() {
 
   // start DHT sensor
   pinMode(DHTPin, INPUT);
-  dht.begin();
+  dht.begin(); //Start the temp,humidity sensor
 
   // run initialisation functions
   startWifi();
   startWebserver();
-  syncDate();
+  syncDate(); //Get the current date from ezTime server.
 
   // start MQTT server
   client.setServer(mqtt_server, 1884);
@@ -86,7 +93,15 @@ void loop() {
   // handler for receiving requests to webserver
   server.handleClient();
 
-  if (minuteChanged()) {
+  //When the minute has changed,take the sensor readings.
+    // store the time since the Arduino started running in a variable
+  unsigned long currentTime = millis();
+
+  // compare the current time to the previous time an LED turned on
+  // if it is greater than your interval, run the if statement
+  if (currentTime - previousTime > interval) {
+ // if (minuteChanged()) {
+    previousTime = currentTime;
     readMoisture();
     sendMQTT();
     Serial.println(GB.dateTime("H:i:s")); // UTC.dateTime("l, d-M-y H:i:s.v T")
@@ -102,21 +117,26 @@ void loop() {
  */
 void readMoisture(){
   
-  // power the sensor
-  digitalWrite(sensorVCC, HIGH);
-  digitalWrite(blueLED, LOW);
+  
+  digitalWrite(sensorVCC, HIGH); // connect power to the sensor network
+  digitalWrite(blueLED, LOW); //Set the blue LED to ON while taking sensor readings
   delay(100);
   // read the value from the sensor:
   Moisture = analogRead(soilPin);         
-  //Moisture = map(analogRead(soilPin), 0,320, 0, 100);    // note: if mapping work out max value by dipping in water     
+  
   //stop power 
-  digitalWrite(sensorVCC, LOW);  
-  digitalWrite(blueLED, HIGH);
+  digitalWrite(sensorVCC, LOW);  // disconnect the sensor network
+  digitalWrite(blueLED, HIGH); //Set the blue LED to ON while taking sensor readings
   delay(100);
-  Serial.print("Wet ");
-  Serial.println(Moisture);   // read the value from the nails
+  Serial.print("Moisture reading: ");
+  Serial.println(Moisture);   // read the value from the soil moisture sensor
 }
 
+/* Function: startWifi()
+ * Desc: Use the ESP wifi libraries
+ * to create the WIFI network with
+ * the provided credentials.
+ */
 void startWifi() {
   // We start by connecting to a WiFi network
   Serial.println();
