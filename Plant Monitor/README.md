@@ -14,7 +14,7 @@ Creation of the temporary circuit:
 To simplify the circuit diagram , I have separated the whole circuit into small circuits, as displayed below:
 ![image](https://user-images.githubusercontent.com/91799774/139703560-d11bd215-ad9d-43b0-a199-812c96f56a10.png)
 
-I found the following diagrams helpful to understand the pin out arrangement of the Huzzaf feather Mcu:
+I found the following diagrams(from CE HUB workshop) helpful to understand the pin out arrangement of the Huzzaf feather Mcu:
 ![image](https://user-images.githubusercontent.com/91799774/140049082-d39b7693-9da2-4d65-8bb1-f506cf930b95.png)
 ![image](https://user-images.githubusercontent.com/91799774/140049219-26946cb2-e0a8-4664-9d3c-b70f07ed51d6.png)
 
@@ -51,7 +51,7 @@ Additionally, the sensor readings are also sent across Http to a webpage for the
 
 Personalise the setup:
 The plant I have chosen is the 'Christmas cactus'. This belongs to the succulent family of plants and retain water.
-I found the below plant instructions on the web for this particular plant:
+I found the below plant instructions on the web(Source: https://www.crocus.co.uk/plants/_/schlumbergera-pink-purple/classid.2000043302/?affiliate=googleproductfeed&gclid=Cj0KCQjwwNWKBhDAARIsAJ8HkheRKBqu9I6hv5GpXiMUXPw5ncwgBsbANdLl2zx12Ashj_9RMeCLqywaAmeGEALw_wcB) for this particular plant:
 
 1. Light: A Christmas cactus should be kept in a bright place, with indirect light.
 2. Water: Water your Christmas cactus only when the soil gets dry to the touch. But during the flowering season, it is crucial to keep the soil evenly moist by misting it frequently.
