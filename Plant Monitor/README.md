@@ -3,8 +3,8 @@ Components used from IOT kit
 1. Feather huzzah ESP8266 microcontroller
 2. Breadboard
 3. Jumper cables
-4. DHT(Temperature,Humidity sensor)
-5. Capacitor
+4. DHT(Temperature,Humidity sensor)- DHT 22
+5. Transistor (BC 547)
 6. USB cable(For power)
 7. Resistors(2 * 10 K Ohms, 1 * 220 Ohms, 2 * 100 Ohms)
 8. Header pins for custom made circuit
