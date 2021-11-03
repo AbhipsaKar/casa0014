@@ -47,7 +47,7 @@ Once we can got the temporary circuit running correctly with the breadboard, we 
 ![image](https://user-images.githubusercontent.com/91799774/139705962-cee03fee-9bb6-4bf2-8a91-4399ec4efecd.png)
 
 Additionally, the sensor readings are also sent across Http to a webpage for the server. The same can be viewed on the IP address created by the ESP WIFI module. A sample screen can be observed below:
-![image](https://user-images.githubusercontent.com/91799774/139909774-18a123d5-f161-4bff-9b9a-1fda3aa53426.png)
+![image](https://user-images.githubusercontent.com/91799774/140059924-6b4079ed-cda7-4cc0-9ce3-7d2a6e4ae6fc.png)
 
 Personalise the setup:
 The plant I have chosen is the 'Christmas cactus'. This belongs to the succulent family of plants and retain water.
