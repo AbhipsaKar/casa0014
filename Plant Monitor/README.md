@@ -14,6 +14,10 @@ Creation of the temporary circuit:
 To simplify the circuit diagram , I have separated the whole circuit into small circuits, as displayed below:
 ![image](https://user-images.githubusercontent.com/91799774/139703560-d11bd215-ad9d-43b0-a199-812c96f56a10.png)
 
+I found the following diagrams helpful to understand the pin out arrangement of the Huzzaf feather Mcu:
+![image](https://user-images.githubusercontent.com/91799774/140049082-d39b7693-9da2-4d65-8bb1-f506cf930b95.png)
+![image](https://user-images.githubusercontent.com/91799774/140049219-26946cb2-e0a8-4664-9d3c-b70f07ed51d6.png)
+
 The below image shows the picture of the completed circuit.
 ![image](https://user-images.githubusercontent.com/91799774/139704129-c027a4cb-fa80-4c6e-b515-3f085e66f4dd.png)
 
