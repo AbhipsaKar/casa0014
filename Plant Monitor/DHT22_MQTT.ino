@@ -31,7 +31,10 @@ int Moisture = 0; // initial value just in case web page is loaded before readMo
 int sensorVCC = 13;  // D13 pin of MCu to be connected to the transistor.
 int blueLED = 2;
 DHT dht(DHTPin, DHTTYPE);   // Initialize DHT sensor.
-
+int cold= 0;
+int hot= 0;
+int wet = 0;
+int dry = 0;
 
 // Wifi and MQTT
 #include "arduino_secrets.h" 
@@ -263,7 +266,9 @@ void reconnect() {
  */
 void handle_OnConnect() {
   Temperature = dht.readTemperature(); // Gets the values of the temperature
+  plantTempSuggest(Temperature);
   Humidity = dht.readHumidity(); // Gets the values of the humidity
+  plantHumSuggest(Humidity);
   server.send(200, "text/html", SendHTML(Temperature, Humidity, Moisture));
 }
 
@@ -271,9 +276,41 @@ void handle_NotFound() {
   server.send(404, "text/plain", "Not found");
 }
 
+/* Function: plantTempSuggest()
+ * Desc: Determine if the ambient temp
+ * is too hot or too cold for the plant
+ */
+void plantTempSuggest(float Temperaturestat){
+  if (Temperaturestat <15 )
+    cold =1;
+   else 
+    cold = 0;
+  Serial.print("Cold =" + cold);
+  if (Temperaturestat >21 )
+    hot = 1;
+   else 
+    hot =0; 
+  Serial.print("Hot =" + hot);
+}
+
+/* Function: plantHumSuggest()
+ * Desc: Determine if the soil
+ * is too wet or too dry for the plant
+ */
+void plantHumSuggest(float Moisturestat){
+  if (Moisturestat >50 )
+    wet =1;
+   else 
+    wet =0;
+  if (Moisturestat <6 )
+    dry = 1;
+   else 
+    dry =0; 
+}
+
 /* Function: SendHTML()
  * Desc: callback function to create the webpage 
- * to display the sensor readings.
+ * to display the sensor readings as well as suggestions.
  */
 String SendHTML(float Temperaturestat, float Humiditystat, int Moisturestat) {
   String ptr = "<!DOCTYPE html> <html>\n";
@@ -286,7 +323,7 @@ String SendHTML(float Temperaturestat, float Humiditystat, int Moisturestat) {
   ptr += "</head>\n";
   ptr += "<body>\n";
   ptr += "<div id=\"webpage\">\n";
-  ptr += "<h1>ESP8266 Huzzah DHT22 Report</h1>\n";
+  ptr += "<h1>ESP8266 Huzzah DHT22 Report-Christmas cactus</h1>\n";
 
   ptr += "<p>Temperature: ";
   ptr += (int)Temperaturestat;
@@ -302,7 +339,19 @@ String SendHTML(float Temperaturestat, float Humiditystat, int Moisturestat) {
   ptr += "<br>";
   ptr += GB.dateTime("d-M-y H:i:s T");
   ptr += "</p>";
-
+  ptr += "<p><h1> Plant suggestions </h1></p>";
+  ptr += "<p>Am I too cold?  ";
+  ptr += (int)cold?"YES":"NO";
+  ptr += "</p>";
+  ptr += "<p>Am I too warm?  ";
+  ptr += (int)hot?"YES":"NO";
+  ptr += "</p>";
+  ptr += "<p>Am I too wet?  ";
+  ptr += (int)wet?"YES":"NO";
+  ptr += "</p>";
+  ptr += "<p>Am I too dry?  ";
+  ptr += (int)dry?"YES":"NO";
+  ptr += "</p>";
   ptr += "</div>\n";
   ptr += "</body>\n";
   ptr += "</html>\n";
