@@ -60,6 +60,36 @@ I found the below plant instructions on the web(Source: https://www.crocus.co.uk
 
 I felt that instead of fixing the sensor reading interval to 1 sec, it could be changed depending on weather conditions. Hence , I have added a variable to set the interval in the arduino sketch. The ESP client name and MQTT topic name have also been updated based on my username.
 
+Moving to Raspberry Pi:
+Once the Raspberry imager is flashed with the latest binary, you can configure a user name and password which can be used to login into SSH and control the Raspberry Pi.
+
+After successfully logging in to Raspberry Pi, install and configure Influx DB, Telegraf and Grafana. 
+Influx DB: is a time series DB which is very ideal for storing data.
+Telegraf:  is the open source server agent to help you collect metrics from your stacks, sensors and systems.
+Grafana: is the dashboard to fetch and visualise the data from DB.
+
+1. We need to confirgure the HTTP endpoint for influx DB by updating the following variables in influxdb.conf:
+[http]
+  # Determines whether HTTP endpoint is enabled.
+  enabled = true
+
+  # The bind address used by the HTTP service.
+  bind-address = ":8086"
+
+  # Determines whether user authentication is enabled over HTTP/HTTPS.
+  auth-enabled = true
+
+2. I have attached the configuration file of telegraf inside the github repository.
+3. Start the grafana server on SSH using command: sudo systemctl start telegraf.service and go to website: http://stud-pi-ucfnaka:3000/d/ZwS7ZPZRk/dashboard-plantmonitor?orgId=1&from=now-24h&to=now
+Host name: stud-pi-ucfnaka
+Port num: 3000
+
+The below screenshot is a sample image of the grafana dashboard where I have added the influxDB as a datasource and queried records from mqtt.consumer table.
+![image](https://user-images.githubusercontent.com/91799774/140770478-9711ab32-ab02-4fe0-90a3-5f1ce3b7dd2e.png)
+
+I have create one combined dashboard for all 3 attributes and a separate dashboard for each attribute.
+With this, we have completed the plant monitor setup.
+
 Future ideas:
 1. Adding a photo-diode to measure the intensity of light.
 2. Adding an reminder for fertilizing the plant every 2 weeks.
